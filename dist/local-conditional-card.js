@@ -17,7 +17,7 @@ class LocalConditionalCard extends LitElement {
     }
 
     set hass(hass) {
-        const thisDomain = "local_toggle_card";
+        const thisDomain = "local_conditional_card";
         if (!this._config || !hass) return;
         this._hass = hass;
         if (this.hassPatched) return;
