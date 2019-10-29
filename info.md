@@ -25,7 +25,7 @@ Each of these services requires a parameter `id` that have to correspond to a ex
 views:
 - name: Example
   cards:
-  - type: 'custom:local-toggle-card'
+  - type: 'custom:local-conditional-card'
     default: show
     id: sun1
     card:
@@ -33,7 +33,7 @@ views:
         - sun.sun
       title: Sun 1
       type: entities
-  - type: 'custom:local-toggle-card'
+  - type: 'custom:local-conditional-card'
     id: sun2
     card:
       entities:
