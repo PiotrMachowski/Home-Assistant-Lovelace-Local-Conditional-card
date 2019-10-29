@@ -1,5 +1,8 @@
 # Lovelace Local Conditional card
 
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
+[![Community Forum](https://img.shields.io/badge/community-forum-brightgreen.svg?style=popout)](https://community.home-assistant.io/t/lovelace-local-conditional-card/145145)
+
 This card can show and hide a specific card on current device while not affecting other windows. It does not require any integration to run.
 
 ## Configuration options
@@ -102,3 +105,6 @@ views:
       - url: /local/custom_lovelace/local_conditional_card/local-conditional-card.js
         type: module
     ```
+
+
+<a href="https://www.buymeacoffee.com/PiotrMachowski" target="_blank"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
