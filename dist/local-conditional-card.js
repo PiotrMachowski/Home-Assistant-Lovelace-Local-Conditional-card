@@ -20,6 +20,9 @@ class LocalConditionalCard extends LitElement {
         const thisDomain = "local_conditional_card";
         if (!this._config || !hass) return;
         this._hass = hass;
+        if (this._card) {
+            this._card.hass = hass;
+        }
         if (this.hassPatched) return;
         const callService = hass.callService;
         hass.callService = (domain, service, serviceData) => {
@@ -39,7 +42,6 @@ class LocalConditionalCard extends LitElement {
 
         this.hassPatched = true;
         document.querySelector("home-assistant").hassChanged(hass, hass);
-        this._card.hass = hass;
     }
 
     shouldUpdate(changedProps) {
@@ -54,7 +56,7 @@ class LocalConditionalCard extends LitElement {
             throw new Error("You need to define 'card' in your configuration.");
         }
         this._config = config;
-        this._card = this.createCard(config.card);
+        this.createCard(config.card);
         this._show = config.default === "show";
     }
 
@@ -64,19 +66,34 @@ class LocalConditionalCard extends LitElement {
             tag = tag.substr("custom:".length);
         else
             tag = `hui-${tag}-card`;
-        let element = document.createElement(tag);
+
         try {
-            element.setConfig(config);
+            if (!customElements.get(tag)) {
+                customElements.whenDefined(tag).then(() => {
+                    let element = document.createElement(tag);
+                    element.setConfig(config);
+                    element.hass = this._hass;
+                    this._card = element;
+                });
+            } else {
+                let element = document.createElement(tag);
+                element.setConfig(config);
+                element.hass = this._hass;
+                this._card = element;
+            }
         } catch (err) {
             console.error(tag, err);
-            return this.createCard({type: "error", error: err.message, origConfig: this._config});
+            this._card = this.createCard({type: "error", error: err.message, origConfig: this._config});
         }
-        return element;
     }
 
     render() {
-        if (this._show === true || this._card.localName === "hui-error-card")
+        const visible = this._show || this._card && this._card.localName === "hui-error-card";
+        this.style.setProperty("display", visible ? "" : "none");
+        this.style.setProperty("margin", "0");
+        if (visible) {
             return html`${this._card}`;
+        }
         return html``;
     }
 }
