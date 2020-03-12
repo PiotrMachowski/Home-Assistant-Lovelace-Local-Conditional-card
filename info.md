@@ -1,3 +1,7 @@
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
+[![Community Forum](https://img.shields.io/badge/community-forum-brightgreen.svg?style=popout)](https://community.home-assistant.io/t/lovelace-local-conditional-card/145145)
+[![buymeacoffee_badge](https://img.shields.io/badge/Donate-buymeacoffe-ff813f?style=flat)](https://www.buymeacoffee.com/PiotrMachowski)
+
 This card can show and hide a specific card on current device while not affecting other windows. It does not require any integration to run.
 
 ## Configuration options
@@ -10,12 +14,41 @@ This card can show and hide a specific card on current device while not affectin
 
 ## Services
 
-This card adds 3 new services that can be used **ONLY** from UI:
- - `local_conditional_card.show` - shows specified card
- - `local_conditional_card.hide` - hides specified card
- - `local_conditional_card.toggle` - shows or hides specified card
+This card adds 4 new services that can be used **ONLY** from UI:
+ - `local_conditional_card.show` - shows specified cards
+ - `local_conditional_card.hide` - hides specified cards
+ - `local_conditional_card.toggle` - changes visibility of specified cards
+ - `local_conditional_card.set` - sets visibility of specified cards
  
-Each of these services requires a parameter `id` that have to correspond to a existing card.
+Each of these services requires a parameter `ids` that should contain a list:
+```yaml
+service: local_conditional_card.show:
+service_data:
+  ids:
+    - id_1
+    - id_2
+```
+```yaml
+service: local_conditional_card.hide:
+service_data:
+  ids:
+    - id_1
+    - id_2
+```
+```yaml
+service: local_conditional_card.toggle:
+service_data:
+  ids:
+    - id_1
+    - id_2
+```
+```yaml
+service: local_conditional_card.set:
+service_data:
+  ids:
+    - id_1: true
+    - id_2: false
+```
 
 ## Example configuration
 
@@ -48,41 +81,59 @@ views:
         name: Sun1
         service: local_conditional_card.toggle
         service_data:
-          id: sun1
+          ids:
+            - sun1
         type: call-service
       - action_name: Show
         icon: 'mdi:power'
         name: Sun1
         service: local_conditional_card.show
         service_data:
-          id: sun1
+          ids:
+            - sun1
         type: call-service
       - action_name: Hide
         icon: 'mdi:power'
         name: Sun1
         service: local_conditional_card.hide
         service_data:
-          id: sun1
+          ids:
+            - sun1
+        type: call-service
+      - action_name: Hide All
+        icon: 'mdi:power'
+        name: Suns
+        service: local_conditional_card.hide
+        service_data:
+          ids:
+            - sun1
+            - sun2
         type: call-service
       - action_name: Toggle
         icon: 'mdi:power'
         name: Sun2
         service: local_conditional_card.toggle
         service_data:
-          id: sun2
+          ids:
+            - sun2
         type: call-service
       - action_name: Show
         icon: 'mdi:power'
         name: Sun2
         service: local_conditional_card.show
         service_data:
-          id: sun2
+          ids:
+            - sun2
         type: call-service
       - action_name: Hide
         icon: 'mdi:power'
         name: Sun2
         service: local_conditional_card.hide
         service_data:
-          id: sun2
+          ids:
+            - sun2
         type: call-service
 ```
+
+
+<a href="https://www.buymeacoffee.com/PiotrMachowski" target="_blank"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
