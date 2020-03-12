@@ -27,7 +27,13 @@ class LocalConditionalCard extends LitElement {
         const callService = hass.callService;
         hass.callService = (domain, service, serviceData) => {
             const methods = ["toggle", "show", "hide", "set"];
-            if (domain === thisDomain && methods.includes(service) && serviceData && Object.keys(serviceData.ids).includes(this._config.id)) {
+            const getId = a => {
+                if (typeof a === "object")
+                    return Object.keys(a);
+                return [a];
+            };
+            const ids = serviceData.ids.flatMap(getId);
+            if (domain === thisDomain && methods.includes(service) && serviceData && ids.includes(this._config.id)) {
                 if (service === "toggle")
                     this._show = !this._show;
                 if (service === "show")
@@ -35,14 +41,11 @@ class LocalConditionalCard extends LitElement {
                 if (service === "hide")
                     this._show = false;
                 if (service === "set") {
-                    this._show = serviceData.ids[this._config.id];
+                    this._show = serviceData.ids[ids.indexOf(this._config.id)][this._config.id];
                 }
                 this.requestUpdate();
-                let new_ids = {};
-                for (const id in serviceData.ids)
-                    if (id !== this._config.id)
-                        new_ids[id] = serviceData.ids[id];
-                if (Object.keys(new_ids).length === 0)
+                let new_ids = serviceData.ids.filter(ido => getId(ido)[0] !== this._config.id);
+                if (new_ids.length === 0)
                     return Promise.resolve();
                 serviceData.ids = new_ids;
                 return callService(domain, service, serviceData);
