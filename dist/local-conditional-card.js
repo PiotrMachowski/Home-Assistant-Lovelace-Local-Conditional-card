@@ -32,8 +32,9 @@ class LocalConditionalCard extends LitElement {
                     return Object.keys(a);
                 return [a];
             };
-            const ids = serviceData.ids.flatMap(getId);
-            if (domain === thisDomain && methods.includes(service) && serviceData && ids.includes(this._config.id)) {
+            if (domain === thisDomain && methods.includes(service) && serviceData && serviceData.ids
+                && serviceData.ids.flatMap(getId).includes(this._config.id)) {
+                const ids = serviceData.ids.flatMap(getId);
                 if (service === "toggle")
                     this._show = !this._show;
                 if (service === "show")
