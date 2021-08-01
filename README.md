@@ -51,6 +51,7 @@ service_data:
   ids:
     - id_1: true
     - id_2: false
+    - id_3: toggle
 ```
 
 ## Example configuration
