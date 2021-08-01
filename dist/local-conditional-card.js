@@ -42,7 +42,12 @@ class LocalConditionalCard extends LitElement {
                 if (service === "hide")
                     this._show = false;
                 if (service === "set") {
-                    this._show = serviceData.ids[ids.indexOf(this._config.id)][this._config.id];
+                    let isVisible = serviceData.ids[ids.indexOf(this._config.id)][this._config.id];
+                    if (isVisible === "toggle") {
+                        this._show = !this._show;
+                    } else {
+                        this._show = isVisible;
+                    }
                 }
                 this.requestUpdate();
                 let new_ids = serviceData.ids.filter(ido => getId(ido)[0] !== this._config.id);
