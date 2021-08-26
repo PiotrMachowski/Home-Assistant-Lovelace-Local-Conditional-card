@@ -48,7 +48,7 @@ class LocalConditionalCard extends LitElement {
                 let new_ids = serviceData.ids.filter(ido => getId(ido)[0] !== this._config.id);
                 if (new_ids.length === 0)
                     return Promise.resolve();
-                serviceData.ids = new_ids;
+                serviceData = { ids: new_ids };
                 return callService(domain, service, serviceData);
             }
             return callService(domain, service, serviceData);
