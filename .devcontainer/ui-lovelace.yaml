@@ -1,0 +1,13 @@
+resources:
+  - url: http://127.0.0.1:5000/local-conditional-card.js
+    type: module
+views:
+  - cards:
+      - type: custom:local-conditional-card
+        id: local_conditional_card_id1
+        default: show
+        card:
+          type: entities
+          name: Sun
+          entities:
+            - sun.sun

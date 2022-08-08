@@ -1,0 +1,28 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    name: Prepare release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      # Build
+      - name: Build
+        run: |
+          npm install
+          npm run build
+
+      # Upload build file to the release as an asset.
+      - name: Upload zip to release
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: dist/local-conditional-card.js
+          asset_name: local-conditional-card.js
+          tag: ${{ github.ref }}
+          overwrite: true
