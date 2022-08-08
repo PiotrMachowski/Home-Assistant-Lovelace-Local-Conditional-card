@@ -1,4 +1,5 @@
 {
   "name": "Local Conditional card",
+  "render_readme": true,
   "filename": "local-conditional-card.js"
 }

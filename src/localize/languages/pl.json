@@ -1,0 +1,16 @@
+{
+  "editor": {
+    "labels": {
+      "default_state": {
+        "prefix": "Domyślny stan: ",
+        "suffix": "",
+        "value": {
+          "shown": "widoczny",
+          "hidden": "ukryty"
+        }
+      },
+      "id": "ID",
+      "card": "W celu konfiguracji wyświetlanej karty użyj edytora YAML."
+    }
+  }
+}

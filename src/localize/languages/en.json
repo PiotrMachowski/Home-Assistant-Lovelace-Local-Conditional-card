@@ -1,0 +1,16 @@
+{
+  "editor": {
+    "labels": {
+      "default_state": {
+        "prefix": "Default state: ",
+        "suffix": "",
+        "value": {
+          "shown": "shown",
+          "hidden": "hidden"
+        }
+      },
+      "id": "ID",
+      "card": "To configure nested card use YAML editor."
+    }
+  }
+}
