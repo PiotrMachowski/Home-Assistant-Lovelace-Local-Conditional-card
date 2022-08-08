@@ -196,7 +196,7 @@ views:
           local_conditional_card:
             action: toggle
             ids:
-              - sun1
+              - sun2
         type: button
       - action_name: Show
         icon: mdi:power
@@ -206,7 +206,7 @@ views:
           local_conditional_card:
             action: show
             ids:
-              - sun1
+              - sun2
         type: button
       - action_name: Hide
         icon: mdi:power
@@ -216,7 +216,7 @@ views:
           local_conditional_card:
             action: hide
             ids:
-              - sun1
+              - sun2
         type: button
 ```
 
