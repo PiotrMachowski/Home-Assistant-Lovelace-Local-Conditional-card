@@ -12,7 +12,11 @@ export interface LocalConditionalCardConfig extends LovelaceCardConfig {
   type: string;
   id: string;
   default: string;
-  card: LovelaceCardConfig;
+  card?: LovelaceCardConfig;
+}
+
+export interface HuiCardElementEditor {
+  toggleMode: () => void;
 }
 
 export interface LovelaceCardFixed extends LovelaceCard {

@@ -36,11 +36,7 @@ export class LocalConditionalCard extends LitElement {
     return {
       id: DEFAULT_ID,
       default: SHOW,
-      card: {
-        type: 'entities',
-        title: 'Sun',
-        entities: ['sun.sun'],
-      },
+      card: {},
     };
   }
 
@@ -56,7 +52,11 @@ export class LocalConditionalCard extends LitElement {
     }
     this.config = config;
     this.show = config.default === 'show';
-    await this.createCard(config.card).then(() => this.requestUpdate());
+    if (!config.card) {
+      throw new Error("No card configured");
+    }
+    if(config.card)
+      await this.createCard(config.card).then(() => this.requestUpdate());
   }
 
   public get hass(): HomeAssistant {
@@ -163,8 +163,8 @@ export class LocalConditionalCard extends LitElement {
     } else {
       await this.createCard({
         type: 'error',
-        error: 'Unable to create children card',
-        origConfig: this.config,
+        error: 'Unable to create child card',
+        origConfig: this.config.card,
       });
     }
   }

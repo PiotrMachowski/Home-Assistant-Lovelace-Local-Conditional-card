@@ -1,9 +1,11 @@
 import { HomeAssistant } from 'custom-card-helpers';
 import { Language, TranslatableString } from '../types';
 import * as en from './languages/en.json';
+import * as pl from './languages/pl.json';
 
 const languages: Record<string, unknown> = {
   en: en,
+  pl: pl
 };
 
 function localizeString(string: string, search = '', replace = '', lang: Language = '', fallback = string): string {

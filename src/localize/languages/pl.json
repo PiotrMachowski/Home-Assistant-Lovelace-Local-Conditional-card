@@ -10,7 +10,7 @@
         }
       },
       "id": "ID",
-      "card": "W celu konfiguracji wyświetlanej karty użyj edytora YAML."
+      "description": "Skonfiguruj ID, które będzie używane do zmiany widoczności tej karty."
     }
   }
 }
