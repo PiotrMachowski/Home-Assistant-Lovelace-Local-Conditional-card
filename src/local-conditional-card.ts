@@ -40,7 +40,7 @@ export class LocalConditionalCard extends LitElement {
     };
   }
 
-  @property({ attribute: false }) public _hass!: HomeAssistant;
+  @property({attribute: false}) public _hass!: HomeAssistant;
 
   @state() private config!: LocalConditionalCardConfig;
   @state() private show!: boolean;
@@ -55,7 +55,7 @@ export class LocalConditionalCard extends LitElement {
     if (!config.card) {
       throw new Error("No card configured");
     }
-    if(config.card)
+    if (config.card)
       await this.createCard(config.card).then(() => this.requestUpdate());
   }
 
@@ -158,7 +158,7 @@ export class LocalConditionalCard extends LitElement {
           : await customElements.whenDefined(tag).then(() => cardCreator(tag, config));
       } catch (err) {
         console.error(tag, err);
-        await this.createCard({ type: 'error', error: (err as Error).message, origConfig: this.config });
+        await this.createCard({type: 'error', error: (err as Error).message, origConfig: this.config});
       }
     } else {
       await this.createCard({
