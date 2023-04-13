@@ -1,6 +1,6 @@
 {
   "name": "local-conditional-card",
-  "version": "v2.0.0",
+  "version": "v2.1.0",
   "description": "Lovelace local conditional card",
   "keywords": [
     "home-assistant",
@@ -16,14 +16,6 @@
   "author": "Piotr Machowski <piotr.machowski.dev@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@lit-labs/scoped-registry-mixin": "^1.0.0",
-    "@material/mwc-formfield": "^0.25.3",
-    "@material/mwc-list": "^0.25.3",
-    "@material/mwc-menu": "^0.25.3",
-    "@material/mwc-notched-outline": "^0.25.3",
-    "@material/mwc-ripple": "^0.25.3",
-    "@material/mwc-switch": "^0.25.3",
-    "@material/mwc-textfield": "^0.25.3",
     "custom-card-helpers": "^1.7.2",
     "lit": "^2.0.0"
   },
@@ -34,12 +26,14 @@
     "@rollup/plugin-json": "^4.1.0",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
+    "cross-var": "^1.1.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.24.0",
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.4.1",
+    "replace-in-file": "^6.3.5",
     "rollup": "^2.58.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
@@ -57,7 +51,8 @@
   },
   "scripts": {
     "start": "rollup -c rollup.config.dev.js --watch",
-    "build": "npm run lint && npm run rollup",
+    "build": "npm run lint && npm run rollup && npm run add-version",
+    "add-version": "cross-var replace-in-file \"@LOCAL_CONDITIONAL_CARD_VERSION_PLACEHOLDER@\" \"$npm_package_version\" \"dist/local-conditional-card.js\"",
     "lint": "eslint src/*.ts",
     "rollup": "rollup -c"
   }

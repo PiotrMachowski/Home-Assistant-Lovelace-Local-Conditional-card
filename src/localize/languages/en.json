@@ -10,7 +10,8 @@
         }
       },
       "id": "ID",
-      "card": "To configure nested card use YAML editor."
+      "description": "Configure ID that will be used to change this card's visibility.",
+      "persist_state": "Persist card's visibility state"
     }
   }
 }

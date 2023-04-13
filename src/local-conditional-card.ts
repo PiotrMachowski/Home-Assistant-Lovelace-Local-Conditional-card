@@ -36,15 +36,11 @@ export class LocalConditionalCard extends LitElement {
     return {
       id: DEFAULT_ID,
       default: SHOW,
-      card: {
-        type: 'entities',
-        title: 'Sun',
-        entities: ['sun.sun'],
-      },
+      card: {},
     };
   }
 
-  @property({ attribute: false }) public _hass!: HomeAssistant;
+  @property({attribute: false}) public _hass!: HomeAssistant;
 
   @state() private config!: LocalConditionalCardConfig;
   @state() private show!: boolean;
@@ -56,7 +52,17 @@ export class LocalConditionalCard extends LitElement {
     }
     this.config = config;
     this.show = config.default === 'show';
-    await this.createCard(config.card).then(() => this.requestUpdate());
+    if (config.persist_state) {
+      const lastSaved = localStorage.getItem(this._getStorageKey(config));
+      if (lastSaved) {
+        this.show = lastSaved === "true";
+      }
+    }
+    if (!config.card) {
+      throw new Error("No card configured");
+    }
+    if (config.card)
+      await this.createCard(config.card).then(() => this.requestUpdate());
   }
 
   public get hass(): HomeAssistant {
@@ -131,7 +137,14 @@ export class LocalConditionalCard extends LitElement {
           this.show = !this.show;
           break;
       }
+      if (this.config.persist_state) {
+        localStorage.setItem(this._getStorageKey(), `${this.show}`);
+      }
     }
+  }
+
+  private _getStorageKey(config?: LocalConditionalCardConfig): string {
+    return `local_conditional_card_state_${(config ?? this.config).id}`;
   }
 
   private isVisible(): boolean {
@@ -158,13 +171,13 @@ export class LocalConditionalCard extends LitElement {
           : await customElements.whenDefined(tag).then(() => cardCreator(tag, config));
       } catch (err) {
         console.error(tag, err);
-        await this.createCard({ type: 'error', error: (err as Error).message, origConfig: this.config });
+        await this.createCard({type: 'error', error: (err as Error).message, origConfig: this.config});
       }
     } else {
       await this.createCard({
         type: 'error',
-        error: 'Unable to create children card',
-        origConfig: this.config,
+        error: 'Unable to create child card',
+        origConfig: this.config.card,
       });
     }
   }

@@ -57,11 +57,12 @@ This card can show and hide a specific card on current device while not affectin
 
 ## Configuration options
 
-| Key | Type | Required | Default | Description |
-| --- | --- | --- | --- | --- |
-| `id` | `string` | `true` | - | Identifier of a card, used in service calls. **Must be unique!** |
-| `card` | `card` | `true` | - | Configuration of a nested card |
-| `default` | `string` | `false` | `hide` | Default card behaviour. Possible values: [`show`, `hide`]. |
+| Key             | Type      | Required | Default | Description                                                                     |
+|-----------------|-----------|----------|---------|---------------------------------------------------------------------------------|
+| `id`            | `string`  | `true`   | -       | Identifier of a card, used in service calls. **Must be unique!**                |
+| `card`          | `card`    | `true`   | -       | Configuration of a nested card                                                  |
+| `default`       | `string`  | `false`  | `hide`  | Default card behaviour. Possible values: [`show`, `hide`].                      |
+| `persist_state` | `boolean` | `false`  | `false` | Enables storing card's state in local storage to restore it after page refresh. |
 
 ## Usage
 
