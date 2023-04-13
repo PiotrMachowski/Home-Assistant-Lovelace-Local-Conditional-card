@@ -52,6 +52,12 @@ export class LocalConditionalCard extends LitElement {
     }
     this.config = config;
     this.show = config.default === 'show';
+    if (config.persist_state) {
+      const lastSaved = localStorage.getItem(this._getStorageKey(config));
+      if (lastSaved) {
+        this.show = lastSaved === "true";
+      }
+    }
     if (!config.card) {
       throw new Error("No card configured");
     }
@@ -131,7 +137,14 @@ export class LocalConditionalCard extends LitElement {
           this.show = !this.show;
           break;
       }
+      if (this.config.persist_state) {
+        localStorage.setItem(this._getStorageKey(), `${this.show}`);
+      }
     }
+  }
+
+  private _getStorageKey(config?: LocalConditionalCardConfig): string {
+    return `local_conditional_card_state_${(config ?? this.config).id}`;
   }
 
   private isVisible(): boolean {

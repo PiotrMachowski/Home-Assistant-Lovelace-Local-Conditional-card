@@ -12,6 +12,7 @@ export interface LocalConditionalCardConfig extends LovelaceCardConfig {
   type: string;
   id: string;
   default: string;
+  persist_state?: boolean;
   card?: LovelaceCardConfig;
 }
 

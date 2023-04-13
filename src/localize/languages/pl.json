@@ -10,7 +10,8 @@
         }
       },
       "id": "ID",
-      "description": "Skonfiguruj ID, które będzie używane do zmiany widoczności tej karty."
+      "description": "Skonfiguruj ID, które będzie używane do zmiany widoczności tej karty.",
+      "persist_state": "Zapisz stan widoczności karty"
     }
   }
 }
