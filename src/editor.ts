@@ -4,7 +4,7 @@ import { fireEvent, HomeAssistant, LovelaceCardEditor } from "custom-card-helper
 
 import { HuiCardElementEditor, LocalConditionalCardConfig, TranslatableString } from "./types";
 import { customElement, property, state, query } from "lit/decorators";
-import { DEFAULT_ID, HIDE, SHOW } from "./const";
+import { CARD_VERSION, DEFAULT_ID, HIDE, SHOW } from "./const";
 import { localizeWithHass } from "./localize/localize";
 
 @customElement("local-conditional-card-editor")
@@ -65,14 +65,14 @@ export class LocalConditionalCardEditor extends LitElement implements LovelaceCa
         return html`
             <div class="card-config">
                 <div class="toolbar">
-                    <mwc-tab-bar .activeIndex=${this._cardTab ? 1 : 0} @MDCTabBar:activated=${this._selectTab}>
-                        <mwc-tab
-                            .label=${this.hass?.localize(
-                                "ui.panel.lovelace.editor.card.conditional.conditions",
-                            )}></mwc-tab>
-                        <mwc-tab
-                            .label=${this.hass?.localize("ui.panel.lovelace.editor.card.conditional.card")}></mwc-tab>
-                    </mwc-tab-bar>
+                    <sl-tab-group @sl-tab-show=${this._selectTab}>
+                        <sl-tab slot="nav" panel="conditions" .active=${!this._cardTab}>
+                            ${this.hass?.localize("ui.panel.lovelace.editor.card.conditional.conditions")}
+                        </sl-tab>
+                        <sl-tab slot="nav" panel="card" .active=${this._cardTab}>
+                            ${this.hass?.localize("ui.panel.lovelace.editor.card.conditional.card")}
+                        </sl-tab>
+                    </sl-tab-group>
                 </div>
                 <div id="editor">${this._cardTab ? this._renderCardChooser() : this._renderCardConfig()}</div>
             </div>
@@ -110,6 +110,7 @@ export class LocalConditionalCardEditor extends LitElement implements LovelaceCa
                             @change=${this._valueChanged}></ha-switch>
                     </ha-formfield>
                 </div>
+                <div class="version">${this.localize("editor.labels.version")} ${CARD_VERSION}</div>
             </div>
         `;
     }
@@ -195,7 +196,7 @@ export class LocalConditionalCardEditor extends LitElement implements LovelaceCa
     }
 
     private _selectTab(ev): void {
-        this._cardTab = ev.detail.index === 1;
+        this._cardTab = ev.detail.name === "card";
     }
 
     private _toggleMode(): void {
@@ -238,12 +239,18 @@ export class LocalConditionalCardEditor extends LitElement implements LovelaceCa
     }
 
     static styles: CSSResultGroup = css`
-        mwc-tab-bar {
-            border-bottom: 1px solid var(--divider-color);
+        sl-tab {
+            flex: 1;
+        }
+
+        sl-tab::part(base) {
+            width: 100%;
+            justify-content: center;
         }
 
         .card-config {
             position: relative;
+            padding-bottom: 1em;
         }
 
         .values {
@@ -277,6 +284,13 @@ export class LocalConditionalCardEditor extends LitElement implements LovelaceCa
 
         .gui-mode-button {
             margin-right: auto;
+        }
+
+        .version {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            opacity: 30%;
         }
     `;
 }

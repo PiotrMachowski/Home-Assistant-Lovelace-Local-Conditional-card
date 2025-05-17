@@ -11,7 +11,8 @@
       },
       "id": "ID",
       "description": "Configure ID that will be used to change this card's visibility.",
-      "persist_state": "Persist card's visibility state"
+      "persist_state": "Persist card's visibility state",
+      "version": "Version:"
     }
   }
 }

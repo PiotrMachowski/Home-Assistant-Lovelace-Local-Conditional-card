@@ -17,10 +17,11 @@ jobs:
 
       - name: Build the file
         run: |
-          npm install
+          npm ci
+          npm version --git-tag-version=false --commit-hooks=false "${{ github.event.release.tag_name }}"
           npm run build
 
-      - name: Upload zip to release
+      - name: Upload build result to release
         uses: svenstaro/upload-release-action@v1-release
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
