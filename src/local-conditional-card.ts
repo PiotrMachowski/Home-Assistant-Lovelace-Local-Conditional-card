@@ -24,6 +24,7 @@ console.info(
     name: "Local Conditional Card",
     description: "A conditional card that works only for current view",
 });
+const cardHelpers = await (window as any).loadCardHelpers();
 
 @customElement("local-conditional-card")
 export class LocalConditionalCard extends LitElement {
@@ -152,8 +153,6 @@ export class LocalConditionalCard extends LitElement {
     }
 
     private async _createCard(cardConfig: LovelaceCardConfig): Promise<LovelaceCard> {
-        const cardHelpers = await (window as any).loadCardHelpers();
-
         const el = cardHelpers.createCardElement(cardConfig);
         el.addEventListener("ll-rebuild", (ev: Event) => {
             ev.stopPropagation();
