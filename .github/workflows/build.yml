@@ -23,7 +23,7 @@ jobs:
 
       - name: Build
         run: |
-          npm ci
+          npm install
           npm run build
 
       - name: Archive built file
