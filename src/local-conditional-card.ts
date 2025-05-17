@@ -43,9 +43,12 @@ export class LocalConditionalCard extends LitElement {
 
     @property({ attribute: false }) public _hass!: HomeAssistant;
 
+    @property({ type: Boolean }) public preview = false;
+
     @state() private config!: LocalConditionalCardConfig;
     @state() private show!: boolean;
     private card!: LovelaceCardFixed;
+    public connectedWhileHidden = true;
 
     public async setConfig(config: LocalConditionalCardConfig): Promise<void> {
         if (!config) {
@@ -77,6 +80,10 @@ export class LocalConditionalCard extends LitElement {
         }
     }
 
+    public get hidden(): boolean {
+        return !this.isVisible();
+    }
+
     constructor() {
         super();
         this._handleLovelaceDomEvent = this._handleLovelaceDomEvent.bind(this);
@@ -88,7 +95,7 @@ export class LocalConditionalCard extends LitElement {
         if (visible) {
             return html`${this.card}`;
         }
-        return html``;
+        return;
     }
 
     connectedCallback(): void {
@@ -133,6 +140,9 @@ export class LocalConditionalCard extends LitElement {
             if (this.config.persist_state) {
                 localStorage.setItem(this._getStorageKey(), `${this.show}`);
             }
+            this.dispatchEvent(
+                new Event("card-visibility-changed", { bubbles: true, cancelable: true })
+            );
         }
     }
 
@@ -141,7 +151,7 @@ export class LocalConditionalCard extends LitElement {
     }
 
     private isVisible(): boolean {
-        return this.show || (this.card && this.card.localName === "hui-error-card");
+        return this.preview || this.show || (this.card && this.card.localName === "hui-error-card");
     }
 
     public async getCardSize(): Promise<number> {
