@@ -140,9 +140,7 @@ export class LocalConditionalCard extends LitElement {
             if (this.config.persist_state) {
                 localStorage.setItem(this._getStorageKey(), `${this.show}`);
             }
-            this.dispatchEvent(
-                new Event("card-visibility-changed", { bubbles: true, cancelable: true })
-            );
+            this.dispatchEvent(new Event("card-visibility-changed", { bubbles: true, cancelable: true }));
         }
     }
 
@@ -151,7 +149,11 @@ export class LocalConditionalCard extends LitElement {
     }
 
     private isVisible(): boolean {
-        return this.preview || this.show || (this.card && this.card.localName === "hui-error-card");
+        return (
+            (this.preview && !(this.config.hide_in_preview ?? false)) ||
+            this.show ||
+            (this.card && this.card.localName === "hui-error-card")
+        );
     }
 
     public async getCardSize(): Promise<number> {

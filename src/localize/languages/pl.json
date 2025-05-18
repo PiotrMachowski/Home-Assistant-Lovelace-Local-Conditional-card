@@ -12,6 +12,7 @@
       "id": "ID",
       "description": "Skonfiguruj ID, które będzie używane do zmiany widoczności tej karty.",
       "persist_state": "Zapisz stan widoczności karty",
+      "hide_in_preview": "Ukryj kartę w trybie edycji",
       "version": "Wersja:"
     }
   }

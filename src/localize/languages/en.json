@@ -12,6 +12,7 @@
       "id": "ID",
       "description": "Configure ID that will be used to change this card's visibility.",
       "persist_state": "Persist card's visibility state",
+      "hide_in_preview": "Hide card in edit mode",
       "version": "Version:"
     }
   }

@@ -53,6 +53,10 @@ export class LocalConditionalCardEditor extends LitElement implements LovelaceCa
         return this._config?.persist_state ?? false;
     }
 
+    get _hide_in_preview(): boolean {
+        return this._config?.hide_in_preview ?? false;
+    }
+
     private localize(ts: TranslatableString): string {
         return localizeWithHass(ts, this.hass);
     }
@@ -107,6 +111,14 @@ export class LocalConditionalCardEditor extends LitElement implements LovelaceCa
                         <ha-switch
                             .checked=${this._persist_state}
                             .configValue=${"persist_state"}
+                            @change=${this._valueChanged}></ha-switch>
+                    </ha-formfield>
+                </div>
+                <div class="values">
+                    <ha-formfield class="switch-wrapper" .label=${this.localize("editor.labels.hide_in_preview")}>
+                        <ha-switch
+                            .checked=${this._hide_in_preview}
+                            .configValue=${"hide_in_preview"}
                             @change=${this._valueChanged}></ha-switch>
                     </ha-formfield>
                 </div>
@@ -173,6 +185,9 @@ export class LocalConditionalCardEditor extends LitElement implements LovelaceCa
                 break;
             case "persist_state":
                 newValue = target.checked;
+                break;
+            case "hide_in_preview":
+                newValue = target.checked ? true : "";
                 break;
             default:
                 newValue = target.value;
