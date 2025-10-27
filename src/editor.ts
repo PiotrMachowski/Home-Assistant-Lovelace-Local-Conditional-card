@@ -69,14 +69,14 @@ export class LocalConditionalCardEditor extends LitElement implements LovelaceCa
         return html`
             <div class="card-config">
                 <div class="toolbar">
-                    <sl-tab-group @sl-tab-show=${this._selectTab}>
-                        <sl-tab slot="nav" panel="conditions" .active=${!this._cardTab}>
+                    <ha-tab-group @wa-tab-show=${this._selectTab}>
+                        <ha-tab-group-tab slot="nav" panel="conditions" .active=${!this._cardTab}>
                             ${this.hass?.localize("ui.panel.lovelace.editor.card.conditional.conditions")}
-                        </sl-tab>
-                        <sl-tab slot="nav" panel="card" .active=${this._cardTab}>
+                        </ha-tab-group-tab>
+                        <ha-tab-group-tab slot="nav" panel="card" .active=${this._cardTab}>
                             ${this.hass?.localize("ui.panel.lovelace.editor.card.conditional.card")}
-                        </sl-tab>
-                    </sl-tab-group>
+                        </ha-tab-group-tab>
+                    </ha-tab-group>
                 </div>
                 <div id="editor">${this._cardTab ? this._renderCardChooser() : this._renderCardConfig()}</div>
             </div>
@@ -254,11 +254,11 @@ export class LocalConditionalCardEditor extends LitElement implements LovelaceCa
     }
 
     static styles: CSSResultGroup = css`
-        sl-tab {
+        ha-tab {
             flex: 1;
         }
 
-        sl-tab::part(base) {
+        ha-tab::part(base) {
             width: 100%;
             justify-content: center;
         }
