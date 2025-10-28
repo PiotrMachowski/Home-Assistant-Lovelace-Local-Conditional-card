@@ -132,7 +132,7 @@ export class LocalConditionalCardEditor extends LitElement implements LovelaceCa
             ${this._config?.card?.type !== undefined
                 ? html`
                       <div class="card-options">
-                          <mwc-button
+                          <ha-button
                               @click=${this._toggleMode}
                               .disabled=${!this._guiModeAvailable}
                               class="gui-mode-button">
@@ -141,10 +141,10 @@ export class LocalConditionalCardEditor extends LitElement implements LovelaceCa
                                       ? "ui.panel.lovelace.editor.edit_card.show_code_editor"
                                       : "ui.panel.lovelace.editor.edit_card.show_visual_editor",
                               )}
-                          </mwc-button>
-                          <mwc-button @click=${this._handleReplaceCard}
+                          </ha-button>
+                          <ha-button @click=${this._handleReplaceCard}
                               >${this.hass?.localize("ui.panel.lovelace.editor.card.conditional.change_type")}
-                          </mwc-button>
+                          </ha-button>
                       </div>
                       <hui-card-element-editor
                           .hass=${this.hass}
@@ -295,6 +295,7 @@ export class LocalConditionalCardEditor extends LitElement implements LovelaceCa
             display: flex;
             justify-content: flex-end;
             width: 100%;
+            margin-bottom: 15px;
         }
 
         .gui-mode-button {
