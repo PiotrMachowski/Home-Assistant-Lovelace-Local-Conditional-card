@@ -108,6 +108,25 @@ export class LocalConditionalCard extends LitElement {
         document.removeEventListener(EVENT_LOVELACE_DOM, this._handleLovelaceDomEvent);
     }
 
+    async firstUpdated() {
+        await this._preloadCardEditors();
+    }
+
+    async _preloadCardEditors() {
+        const helpers = await (window as any).loadCardHelpers?.();
+        if (!helpers) return;
+
+        const verticalStackCard = await helpers.createCardElement({
+            type: "vertical-stack",
+            cards: [],
+        });
+
+        await customElements.whenDefined("hui-vertical-stack-card");
+        if (verticalStackCard?.constructor?.getConfigElement) {
+            await verticalStackCard.constructor.getConfigElement();
+        }
+    }
+
     private _handleLovelaceDomEvent(e: Event): void {
         const lovelaceEvent = e as LovelaceDomEvent;
         if (
